@@ -55,7 +55,7 @@ namespace GuessingGameV2
                     break;
             }
 
-            while(userGuess != answer || guessesMade != totalGuesses)
+            while(guessesMade != totalGuesses)
             {
                 Console.WriteLine("Please make a new guess");
                 userGuess = Convert.ToInt32(Console.ReadLine());
@@ -84,24 +84,22 @@ namespace GuessingGameV2
 
             Console.WriteLine("Please choose a difficulty:\n1. Easy\n2. Medium\n3. Hard");
             int choice = Convert.ToInt32(Console.ReadLine());
+            int validChoice = ValidateChoice(choice);
 
-            while(choice != 1 || choice != 2 || choice != 3)
+            switch (validChoice)
             {
-                switch (choice)
-                {
-                    case 1:
-                        difficulty = 1;
-                        break;
-                    case 2:
-                        difficulty = 2;
-                        break;
-                    case 3:
-                        difficulty = 3;
-                        break;
-                    default:
-                        Console.WriteLine("Please enter a valid diffiulty choice.");
-                        break;
-                }
+                case 1:
+                    difficulty = 1;
+                    break;
+                case 2:
+                    difficulty = 2;
+                    break;
+                case 3:
+                    difficulty = 3;
+                    break;
+                default:
+                    Console.WriteLine("Please enter a valid diffiulty choice.");
+                    break;
             }
 
             return difficulty;
@@ -133,6 +131,17 @@ namespace GuessingGameV2
             }
 
 
+        }
+
+        public static int ValidateChoice(int choice)
+        {
+            while (choice < 1 || choice > 3)
+            {
+                Console.WriteLine("Please choose a valid difficulty:\n1.Easy\n2.Medium\n3.Hard");
+                choice = Convert.ToInt32(Console.ReadLine());
+            }
+
+            return choice;
         }
     }
 }
