@@ -31,6 +31,107 @@ namespace GuessingGameV2
 
         public static void PlayerGuessesMode()
         {
+            Random randNum = new Random();
+            int difficulty = GetDifficulty();
+            int guessesMade = 0;
+            int totalGuesses = 0;
+            int answer = 0;
+            int userGuess = -5000;
+
+
+            switch (difficulty)
+            {
+                case 1:
+                    totalGuesses = 20;
+                    answer = randNum.Next(0, 100);
+                    break;
+                case 2:
+                    totalGuesses = 15;
+                    answer = randNum.Next(0, 500);
+                    break;
+                case 3:
+                    totalGuesses = 7;
+                    answer = randNum.Next(-1000, 1000);
+                    break;
+            }
+
+            while(userGuess != answer || guessesMade != totalGuesses)
+            {
+                Console.WriteLine("Please make a new guess");
+                userGuess = Convert.ToInt32(Console.ReadLine());
+
+                if(userGuess > answer)
+                {
+                    Console.WriteLine("Your guess is too high!");
+                    guessesMade++;
+                }
+                else if(userGuess < answer)
+                {
+                    Console.WriteLine("Your guess is too low!");
+                    guessesMade++;
+                }
+                else
+                {
+                    Console.WriteLine("Congratulations! You Win! the answer was in fact: " + answer);
+                    break;
+                }
+            }
+        }
+
+        public static int GetDifficulty()
+        {
+            int difficulty = 0;
+
+            Console.WriteLine("Please choose a difficulty:\n1. Easy\n2. Medium\n3. Hard");
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            while(choice != 1 || choice != 2 || choice != 3)
+            {
+                switch (choice)
+                {
+                    case 1:
+                        difficulty = 1;
+                        break;
+                    case 2:
+                        difficulty = 2;
+                        break;
+                    case 3:
+                        difficulty = 3;
+                        break;
+                    default:
+                        Console.WriteLine("Please enter a valid diffiulty choice.");
+                        break;
+                }
+            }
+
+            return difficulty;
+        }
+
+        public static void ComputerGuessesMode()
+        {
+            Random randNum = new Random();
+            int difficulty = GetDifficulty();
+            int guessesMade = 0;
+            int totalGuesses = 0;
+            int answer = 0;
+            int userGuess = -5000;
+
+            switch (difficulty)
+            {
+                case 1:
+                    totalGuesses = 20;
+                    answer = randNum.Next(0, 100);
+                    break;
+                case 2:
+                    totalGuesses = 15;
+                    answer = randNum.Next(0, 500);
+                    break;
+                case 3:
+                    totalGuesses = 7;
+                    answer = randNum.Next(-1000, 1000);
+                    break;
+            }
+
 
         }
     }
