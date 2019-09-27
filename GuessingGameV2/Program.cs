@@ -72,7 +72,7 @@ namespace GuessingGameV2
                 }
                 else
                 {
-                    Console.WriteLine("Congratulations! You Win! the answer was in fact: " + answer);
+                    Console.WriteLine("Congratulations! You Win! The answer was in fact: " + answer);
                     break;
                 }
             }
@@ -138,31 +138,41 @@ namespace GuessingGameV2
                     break;
             }
 
-            while(guessesMade != totalGuesses)
+            try
             {
-                compGuess = randNum.Next(min, max);
-                Console.WriteLine(compGuess);
+                while (guessesMade != totalGuesses)
+                {
+                    compGuess = randNum.Next(min, max);
+                    Console.WriteLine("Is it " + compGuess + "?");
+                    int userResponse = AnswerResponse();
 
-                if(AnswerResponse() == 1)
-                {
-                    //Too high
-                    max = compGuess;
-                    Console.WriteLine("Too high? Hmmm...");
-                    System.Threading.Thread.Sleep(5000);
+                    if (userResponse == 1)
+                    {
+                        //Too high
+                        max = compGuess;
+                        guessesMade++;
+                        Console.WriteLine("Too high? Hmmm...");
+                        System.Threading.Thread.Sleep(2000);
+                    }
+                    else if (userResponse == 2)
+                    {
+                        //Too low
+                        min = compGuess;
+                        guessesMade++;
+                        Console.WriteLine("Too low? Hmmm...");
+                        System.Threading.Thread.Sleep(2000);
+                    }
+                    else
+                    {
+                        //Correct answer
+                        Console.WriteLine("Wooh! You're bad at this man!");
+                        break;
+                    }
                 }
-                else if(AnswerResponse() == 2)
-                {
-                    //Too low
-                    min = compGuess;
-                    Console.WriteLine("Too low? Hmmm...");
-                    System.Threading.Thread.Sleep(5000);
-                }
-                else
-                {
-                    //Correct answer
-                }
+            }catch(Exception ex)
+            {
+                Console.WriteLine("Haha! You're either changing your number or I win ;)");
             }
-
         }
 
         public static int ValidateChoice(int choice)
