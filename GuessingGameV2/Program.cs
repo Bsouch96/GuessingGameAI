@@ -112,24 +112,56 @@ namespace GuessingGameV2
             int guessesMade = 0;
             int totalGuesses = 0;
             int answer = 0;
-            int userGuess = -5000;
+            int compGuess = -5000;
+            int min = 0;
+            int max = 0;
 
             switch (difficulty)
             {
                 case 1:
                     totalGuesses = 20;
                     answer = randNum.Next(0, 100);
+                    min = 0;
+                    max = 100;
                     break;
                 case 2:
                     totalGuesses = 15;
                     answer = randNum.Next(0, 500);
+                    min = 0;
+                    max = 500;
                     break;
                 case 3:
                     totalGuesses = 7;
                     answer = randNum.Next(-1000, 1000);
+                    min = -1000;
+                    max = 1000;
                     break;
             }
 
+            while(guessesMade != totalGuesses)
+            {
+                compGuess = randNum.Next(min, max);
+                Console.WriteLine(compGuess);
+
+                if(AnswerResponse() == 1)
+                {
+                    //Too high
+                    max = compGuess;
+                    Console.WriteLine("Too high? Hmmm...");
+                    System.Threading.Thread.Sleep(5000);
+                }
+                else if(AnswerResponse() == 2)
+                {
+                    //Too low
+                    min = compGuess;
+                    Console.WriteLine("Too low? Hmmm...");
+                    System.Threading.Thread.Sleep(5000);
+                }
+                else
+                {
+                    //Correct answer
+                }
+            }
 
         }
 
@@ -137,11 +169,20 @@ namespace GuessingGameV2
         {
             while (choice < 1 || choice > 3)
             {
-                Console.WriteLine("Please choose a valid difficulty:\n1.Easy\n2.Medium\n3.Hard");
+                Console.WriteLine("Please choose an appropriate value of 1, 2 or 3");
                 choice = Convert.ToInt32(Console.ReadLine());
             }
 
             return choice;
+        }
+
+        public static int AnswerResponse()
+        {
+            Console.WriteLine("Select the most appropriate response:\n1. Too high!\n2. Too Low!\n 3. Thats the answer!");
+            int userChoice = Convert.ToInt32(Console.ReadLine());
+            int validChoice = ValidateChoice(userChoice);
+
+            return validChoice;
         }
     }
 }
